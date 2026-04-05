@@ -1,8 +1,9 @@
 {
   "name": "proj_test_cicd_jest",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
+    "start": "node src/server.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "cypress:open": "cypress open",
