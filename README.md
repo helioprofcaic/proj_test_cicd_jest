@@ -1,0 +1,29 @@
+# proj_test_cicd_jest
+
+Um projeto de exemplo para demonstrar testes e integração contínua (CI/CD) com Jest e Cypress.
+
+## Instalação
+
+Para instalar as dependências do projeto, execute o seguinte comando:
+
+```bash
+npm install
+```
+
+## Scripts Disponíveis
+
+### `npm test`
+
+Executa os testes unitários e de integração com o Jest e gera um relatório de cobertura.
+
+### `npm run test:watch`
+
+Executa os testes com o Jest em modo de observação, re-executando os testes a cada alteração de arquivo.
+
+### `npm run cypress:open`
+
+Abre o painel de controle do Cypress para execução de testes de ponta a ponta (E2E) interativamente.
+
+### `npm run cypress:run`
+
+Executa os testes de ponta a ponta (E2E) com o Cypress em modo headless, ideal para ambientes de CI.
