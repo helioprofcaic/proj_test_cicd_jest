@@ -2,6 +2,10 @@
 
 Um projeto de exemplo para demonstrar testes e integração contínua (CI/CD) com Jest e Cypress.
 
+## 📄 Documentação
+
+Para mais detalhes sobre a arquitetura, tutoriais e outros procedimentos, consulte a pasta [/docs](./docs/).
+
 ## Instalação
 
 Para instalar as dependências do projeto, execute o seguinte comando:

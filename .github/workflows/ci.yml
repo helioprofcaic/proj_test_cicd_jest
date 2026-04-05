@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Node.js CI
 
 on:
   push:
@@ -7,24 +7,57 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
-  build:
+  # Job para testes unitários e de integração com Jest
+  jest-tests:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x, 20.x]
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-
     - name: Install dependencies
       run: npm install
-
     - name: Run Jest tests
       run: npm test
+
+  # Job para testes E2E com Cypress
+  cypress-run:
+    # Este job só roda após o 'jest-tests' ser concluído com sucesso
+    needs: jest-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      # Executa os testes do Cypress usando a Action oficial
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          # Comando para rodar os testes Cypress em modo headless
+          command: npm run cypress:run
+          # Inicia o servidor web em background e espera a URL ficar acessível
+          start: npm start
+          wait-on: 'http://localhost:3000' # Ajuste a porta se for diferente
+
+      # Este passo faz o upload dos vídeos e screenshots se os testes do Cypress falharem
+      - name: Upload Cypress artifacts on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/screenshots
+            cypress/videos
